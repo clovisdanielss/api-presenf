@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize')
 
 module.exports = (sequelize) => {
-  var Prescricao = require('prescricao')(sequelize)
+  var Prescricao = require('./prescricao.js')(sequelize)
   return sequelize.define('diagnostico', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     idPrescricao: {
@@ -18,5 +18,7 @@ module.exports = (sequelize) => {
     intervencao: { type: Sequelize.STRING, allowNull: false },
     aprazamento: { type: Sequelize.STRING, allowNull: false },
     avaliacao: { type: Sequelize.STRING, allowNull: false }
+  }, {
+    timestamps: false
   })
 }

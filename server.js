@@ -18,7 +18,8 @@ app.sequelize = new Sequelize(database, dbusername, dbpassword, {
   host: dbhost,
   dialect: 'postgres',
   ssl: true, // Somente para local
-  native: true // Somente para local
+  native: true, // Somente para local
+  timezone: '-06:00'
 })
 
 app.use(cors())
