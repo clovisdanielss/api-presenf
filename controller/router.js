@@ -1,6 +1,5 @@
 var paciente = require('./paciente.js')
 var prescricao = require('./prescricao')
-var historico = require('./historico')
 var enfermeiro = require('./enfermeiro')
 
 module.exports = (app) => {
@@ -11,7 +10,6 @@ module.exports = (app) => {
   })
   app.use('/paciente', paciente)
   app.use('/paciente/:idPaciente/prescricao', prescricao)
-  app.use('/paciente/:idPaciente/historico', historico)
   app.use('/enfermeiro', enfermeiro)
   // middlewares para erros.
   app.use((err, req, res, next) => {

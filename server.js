@@ -4,6 +4,7 @@ var makeRoutes = require('./controller/router.js')
 var dotenv = require('dotenv')
 var bodyParser = require('body-parser')
 var Sequelize = require('sequelize')
+var cors = require('cors')
 // leitura do .env file.
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.sequelize = new Sequelize(database, dbusername, dbpassword, {
   native: true // Somente para local
 })
 
+app.use(cors())
 // Body parser para adquirir objeto body.
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

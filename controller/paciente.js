@@ -17,6 +17,11 @@ router.get('(/:id)?', (req, res, next) => {
   })
 })
 
+router.all('/:id/*', (req, res, next) => {
+  req.pacienteParams = req.params
+  next()
+})
+
 router.post('', (req, res, next) => {
   var Paciente = pacienteModel(req.sequelize)
   Paciente.create(req.body).then((paciente) => {

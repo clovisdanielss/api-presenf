@@ -11,6 +11,11 @@ router.get('', (req, res, next) => {
   })
 })
 
+router.all('/:id/*', (req, res, next) => {
+  req.enfermeiroParams = req.params
+  next()
+})
+
 router.post('', (req, res, next) => {
   var Enfermeiro = enfermeiroModel(req.sequelize)
   Enfermeiro.create(req.body).then((enfermeiro) => {
