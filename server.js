@@ -8,9 +8,10 @@ var cors = require('cors')
 // leitura do .env file.
 dotenv.config()
 
-app.sequelize = new Sequelize(process.env.DATABASE_URL, {
+app.sequelize = new Sequelize(process.env.DATABASE_URL +
+  '?ssl=' + process.env.PGSSLMODE, {
   dialect: 'postgres',
-  ssl: false, // Somente para local
+  ssl: true, // Somente para local
   native: true, // Somente para local
   timezone: '-06:00'
 })
