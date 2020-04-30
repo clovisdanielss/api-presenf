@@ -10,8 +10,8 @@ dotenv.config()
 
 app.sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  ssl: true, // Somente para local
-  // native: true, // Somente para local
+  // ssl: true, // Somente para local
+  native: true, // Somente para local
   timezone: '-06:00'
 })
 
