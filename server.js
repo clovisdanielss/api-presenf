@@ -5,7 +5,7 @@ var dotenv = require('dotenv')
 var bodyParser = require('body-parser')
 var Sequelize = require('sequelize')
 var cors = require('cors')
-// leitura do .env file.
+// leitura do .env file. Teste.
 dotenv.config()
 
 app.sequelize = new Sequelize(process.env.DATABASE_URL +
