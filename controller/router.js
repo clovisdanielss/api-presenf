@@ -15,10 +15,11 @@ module.exports = (app) => {
   app.use('/enfermeiro', enfermeiro)
   // middlewares para erros.
   app.use((err, req, res, next) => {
-    console.error(err)
+    console.error('Houve um erro: ', err)
     next(err)
   })
   app.use((err, req, res, next) => {
+    console.log('O servidor respondeu o cliente com um erro.')
     if (err.status == null) {
       err.status = 500
     }
