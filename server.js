@@ -8,14 +8,7 @@ var cors = require('cors')
 // leitura do .env file.
 dotenv.config()
 
-// Pegand parâmetros para conexão de banco de dados.
-const database = process.env.DATABASE
-const dbusername = process.env.DBUSERNAME
-const dbpassword = process.env.DBPASSWORD
-const dbhost = process.env.DBHOST
-
-app.sequelize = new Sequelize(database, dbusername, dbpassword, {
-  host: dbhost,
+app.sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   ssl: true, // Somente para local
   native: true, // Somente para local
