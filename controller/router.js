@@ -1,6 +1,7 @@
 var paciente = require('./paciente.js')
-var prescricao = require('./prescricao')
-var enfermeiro = require('./enfermeiro')
+var prescricao = require('./prescricao.js')
+var enfermeiro = require('./enfermeiro.js')
+var cipe = require('./cipe.js')
 
 module.exports = (app) => {
   // composition pattern.
@@ -11,6 +12,7 @@ module.exports = (app) => {
   app.use('/paciente', paciente)
   app.use('/paciente/:idPaciente/prescricao', prescricao)
   app.use('/enfermeiro', enfermeiro)
+  app.use('/cipe', cipe)
   // middlewares para erros.
   app.use((err, req, res, next) => {
     console.error('Houve um erro: ', err)
