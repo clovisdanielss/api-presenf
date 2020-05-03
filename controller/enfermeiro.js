@@ -2,9 +2,15 @@ var express = require('express')
 var router = express.Router()
 var enfermeiroModel = require('../models/enfermeiro.js')
 
-router.get('', (req, res, next) => {
+router.get('(/:coren)?', (req, res, next) => {
+  var dbQuery = {}
+  if (req.params.coren) {
+    dbQuery = {
+      coren: req.params.coren
+    }
+  }
   var Enfermeiro = enfermeiroModel(req.sequelize)
-  Enfermeiro.findAll().then((enfermeiros) => {
+  Enfermeiro.findAll({ where: dbQuery }).then((enfermeiros) => {
     res.send(enfermeiros)
   }).catch((err) => {
     next(err)

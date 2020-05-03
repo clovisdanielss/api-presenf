@@ -5,11 +5,11 @@ module.exports = (sequelize) => {
   var Paciente = require('./paciente.js')(sequelize)
   return sequelize.define('prescricao', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    idEnfermeiro: {
+    coren: {
       type: Sequelize.INTEGER,
       references: {
         model: Enfermeiro,
-        key: 'id',
+        key: 'coren',
         deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
       },
       allowNull: false
