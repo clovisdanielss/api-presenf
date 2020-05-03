@@ -6,9 +6,25 @@ var diagnosticoModel = require('../models/diagnostico.js')
 router.get('', (req, res, next) => {
   var Prescricao = prescricaoModel(req.sequelize)
   Prescricao.findAll({
+    where: {
+      idPaciente: req.pacienteParams.id
+    },
     order: [['dataCriacao', 'DESC']]
   }).then((prescricao) => {
     res.json(prescricao)
+  }).catch((err) => {
+    next(err)
+  })
+})
+
+router.get('/:id', (req, res, next) => {
+  var Diagnostico = diagnosticoModel(req.sequelize)
+  Diagnostico.findAll({
+    where: {
+      idPrescricao: req.params.id
+    }
+  }).then((diagnosticos) => {
+    res.json(diagnosticos)
   }).catch((err) => {
     next(err)
   })
