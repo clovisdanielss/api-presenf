@@ -37,6 +37,7 @@ router.all('/:id/*', (req, res, next) => {
 
 router.post('', (req, res, next) => {
   var Prescricao = prescricaoModel(req.sequelize)
+  console.log(req.body)
   var prescricaoDados = {
     coren: req.body.coren,
     idPaciente: req.pacienteParams.id,
