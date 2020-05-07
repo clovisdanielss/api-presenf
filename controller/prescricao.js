@@ -27,13 +27,33 @@ router.all('/:id/*', (req, res, next) => {
 
 router.post('', (req, res, next) => {
   var Prescricao = prescricaoModel(req.sequelize)
-  var prescricaoDados = {
-    coren: req.body.coren,
-    idPaciente: req.pacienteParams.id,
-    observacao: req.body.observacao
-  }
+  var Diagnostico = diagnosticoModel(req.sequelize)
+  var Intervencao = intervencaoModel(req.sequelize)
+  var prescricaoDados = req.body
+  prescricaoDados.idPaciente = req.pacienteParams.id
+  var diagnosticosDados = prescricaoDados.diagnosticos
+  var intervencaosDados = []
+  var result = []
   Prescricao.create(prescricaoDados).then((prescricao) => {
-    res.status(201).json(prescricao.dataValues)
+    result.push(prescricao.dataValues)
+    diagnosticosDados.map((diagnostico) => {
+      diagnostico.idPrescricao = prescricao.dataValues.id
+    })
+    Diagnostico.bulkCreate(diagnosticosDados).then((diagnosticos) => {
+      diagnosticos.map((diagnostico, index) => {
+        result.push(diagnostico.dataValues)
+        diagnosticosDados[index].intervencaos.map((intervencao) => {
+          intervencao.idDiagnostico = diagnostico.dataValues.id
+          intervencaosDados.push(intervencao)
+        })
+      })
+      Intervencao.bulkCreate(intervencaosDados).then((intervencaos) => {
+        intervencaos.map((intervencao) => {
+          result.push(intervencao.dataValues)
+        })
+        res.status(201).json(result)
+      })
+    })
   }).catch((err) => {
     next(err)
   })

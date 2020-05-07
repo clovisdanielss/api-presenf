@@ -24,12 +24,8 @@ router.all('/:id/*', (req, res, next) => {
 
 router.post('', (req, res, next) => {
   var Intervencao = intervencaoModel(req.sequelize)
-  var intervencaoDados = {
-    idDiagnostico: req.diagnosticoParams.id,
-    nome: req.body.nome,
-    profissional: req.body.profissional,
-    aprazamento: req.body.aprazamento
-  }
+  var intervencaoDados = req.body
+  intervencaoDados.idDiagnostico = req.diagnosticoParams.id
   Intervencao.create(intervencaoDados).then((intervencao) => {
     res.status(201).json(intervencao.dataValues)
   }).catch((err) => {
