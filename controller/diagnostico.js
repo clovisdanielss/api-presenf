@@ -3,31 +3,20 @@ var router = express.Router()
 var diagnosticoModel = require('../models/diagnostico.js')
 var intervencaoModel = require('../models/intervencao.js')
 
-router.get('', (req, res, next) => {
+router.get('(/:id)?', (req, res, next) => {
   var query = { idPrescricao: req.prescricaoParams.id }
   if (req.params.id) {
     query.id = req.params.id
   }
-  var Diagnostico = diagnosticoModel(req.sequelize)
-  Diagnostico.findAll({
-    where: query
-  }).then((diagnosticos) => {
-    res.json(diagnosticos)
-  }).catch((err) => {
-    next(err)
-  })
-})
-
-router.get('/:id', (req, res, next) => {
   var Intervencao = intervencaoModel(req.sequelize)
   var Diagnostico = diagnosticoModel(req.sequelize)
   Diagnostico.hasMany(Intervencao, { foreignKey: 'idDiagnostico' })
   Intervencao.belongsTo(Diagnostico, { foreignKey: 'idDiagnostico' })
   Diagnostico.findAll({
-    where: { id: req.params.id },
+    where: query,
     include: [{ model: Intervencao }]
-  }).then((diagInterv) => {
-    res.json(diagInterv)
+  }).then((diagnosticos) => {
+    res.json(diagnosticos)
   }).catch((err) => {
     next(err)
   })
