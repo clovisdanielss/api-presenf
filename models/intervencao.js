@@ -1,21 +1,21 @@
 var Sequelize = require('sequelize')
 
 module.exports = (sequelize) => {
-  var Prescricao = require('./prescricao.js')(sequelize)
-  return sequelize.define('diagnostico', {
+  var Diagnostico = require('./diagnostico.js')(sequelize)
+  return sequelize.define('intervencao', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    idPrescricao: {
+    idDiagnostico: {
       type: Sequelize.INTEGER,
       references: {
-        model: Prescricao,
+        model: Diagnostico,
         key: 'id',
         deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
       },
       allowNull: false
     },
     nome: { type: Sequelize.STRING, allowNull: false },
-    resultado: { type: Sequelize.STRING, allowNull: false },
-    avaliacao: { type: Sequelize.STRING, allowNull: false }
+    profissional: { type: Sequelize.STRING, allowNull: false },
+    aprazamento: { type: Sequelize.STRING, allowNull: false }
   }, {
     timestamps: false
   })

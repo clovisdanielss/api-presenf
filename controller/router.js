@@ -1,6 +1,8 @@
 var paciente = require('./paciente.js')
 var prescricao = require('./prescricao.js')
 var enfermeiro = require('./enfermeiro.js')
+var diagnostico = require('./diagnostico.js')
+var intervencao = require('./intervencao.js')
 var cipe = require('./cipe.js')
 
 module.exports = (app) => {
@@ -11,6 +13,8 @@ module.exports = (app) => {
   })
   app.use('/paciente', paciente)
   app.use('/paciente/:idPaciente/prescricao', prescricao)
+  app.use('/paciente/:idPaciente/prescricao/:id/diagnostico', diagnostico)
+  app.use('/paciente/:idPaciente/prescricao/:id/diagnostico/:id/intervencao', intervencao)
   app.use('/enfermeiro', enfermeiro)
   app.use('/cipe', cipe)
   // middlewares para erros.
