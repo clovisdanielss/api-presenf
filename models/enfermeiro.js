@@ -4,7 +4,7 @@ var crypto = require('crypto')
 module.exports = (sequelize) => {
   const Enfermeiro = sequelize.define('enfermeiro', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    coren: { type: Sequelize.INTEGER, unique: true, allowNull: false },
+    coren: { type: Sequelize.STRING, unique: true, allowNull: false },
     nome: { type: Sequelize.STRING, allowNull: false },
     senha: {
       type: Sequelize.STRING,

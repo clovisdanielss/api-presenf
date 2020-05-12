@@ -18,7 +18,6 @@ module.exports = function (app) {
       senha = senha + tempero
       hash.update(senha)
       senha = hash.digest('hex')
-      console.log(senha, '\n', enfermeiro.getDataValue('senha'))
       if (senha === enfermeiro.getDataValue('senha')) {
         return done(null, enfermeiro)
       } else {

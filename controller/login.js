@@ -15,6 +15,7 @@ router.post('', (req, res, next) => {
       res.json({
         id: enfermeiro.id,
         coren: enfermeiro.coren,
+        exp: Math.floor(Date.now() / 1000) + 60 * 50,
         token: token
       })
     } else {
