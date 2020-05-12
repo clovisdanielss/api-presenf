@@ -19,7 +19,9 @@ router.post('', (req, res, next) => {
         token: token
       })
     } else {
-
+      var error = new Error('Usuário ou senha errada')
+      error.status = 401
+      next(error)
     }
   })(req, res, next)
 })
