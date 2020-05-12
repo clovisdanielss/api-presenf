@@ -1,10 +1,13 @@
-var express = require('express')
+const express = require('express')
 var app = express()
-var makeRoutes = require('./controller/router.js')
-var dotenv = require('dotenv')
-var bodyParser = require('body-parser')
-var Sequelize = require('sequelize')
-var cors = require('cors')
+const makeRoutes = require('./controller/router.js')
+const dotenv = require('dotenv')
+const bodyParser = require('body-parser')
+const Sequelize = require('sequelize')
+const cors = require('cors')
+const crypto = require('crypto')
+// Segredo Aleatório do Servidor
+app.SECRET = crypto.randomBytes(128).toString('hex')
 // leitura do .env file. Teste.
 dotenv.config()
 

@@ -50,7 +50,7 @@ router.patch('/:id', (req, res, next) => {
   Paciente.update(dbQuery, {
     where: { id: req.params.id }
   }).then(() => {
-    res.status(200).json({ success: 'ok' })
+    res.status(200).json({ success: 'updated' })
   }).catch((err) => {
     next(err)
   })

@@ -1,6 +1,7 @@
-var express = require('express')
-var router = express.Router()
-var enfermeiroModel = require('../models/enfermeiro.js')
+const express = require('express')
+const router = express.Router()
+const enfermeiroModel = require('../models/enfermeiro.js')
+const passport = require('passport')
 
 router.get('(/:coren)?', (req, res, next) => {
   var dbQuery = {}
@@ -10,7 +11,7 @@ router.get('(/:coren)?', (req, res, next) => {
     }
   }
   var Enfermeiro = enfermeiroModel(req.sequelize)
-  Enfermeiro.findAll({ where: dbQuery }).then((enfermeiros) => {
+  Enfermeiro.findAll({ attributes: ['coren', 'nome'], where: dbQuery }).then((enfermeiros) => {
     res.send(enfermeiros)
   }).catch((err) => {
     next(err)
@@ -25,6 +26,8 @@ router.all('/:id/*', (req, res, next) => {
 router.post('', (req, res, next) => {
   var Enfermeiro = enfermeiroModel(req.sequelize)
   Enfermeiro.create(req.body).then((enfermeiro) => {
+    enfermeiro.dataValues.tempero = 'Não preciso mostrar para você'
+    enfermeiro.dataValues.senha = 'Não preciso mostrar para você'
     res.status(201).send(enfermeiro.dataValues)
   }).catch((err) => {
     next(err)
@@ -47,17 +50,30 @@ router.delete('/:id', (req, res, next) => {
 })
 
 router.patch('/:id', (req, res, next) => {
-  var Enfermeiro = enfermeiroModel(req.sequelize)
-  var dbQuery = req.body
-  Enfermeiro.update(dbQuery, {
-    where: {
-      id: req.params.id
+  passport.authenticate('local', (err, enfermeiro, info) => {
+    if (err) {
+      next(err)
+    } else if (enfermeiro) {
+      var Enfermeiro = enfermeiroModel(req.sequelize)
+      var dbQuery = req.body
+      if (dbQuery.novaSenha) {
+        dbQuery.senha = dbQuery.novaSenha
+      }
+      Enfermeiro.update(dbQuery, {
+        where: {
+          id: req.params.id
+        }
+      }).then(() => {
+        res.status(200).json({ success: 'updated' })
+      }).catch((err) => {
+        next(err)
+      })
+    } else {
+      var error = new Error('Usuário ou senha errada')
+      error.status = 401
+      next(error)
     }
-  }).then(() => {
-    res.status(200).json({ success: 'ok' })
-  }).catch((err) => {
-    next(err)
-  })
+  })(req, res, next)
 })
 
 module.exports = router
